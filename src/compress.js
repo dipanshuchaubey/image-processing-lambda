@@ -1,3 +1,4 @@
+import path from 'path';
 import sharp from 'sharp';
 import {
   S3Client,
@@ -5,7 +6,7 @@ import {
   GetObjectCommand,
 } from '@aws-sdk/client-s3';
 
-const handler = async (event) => {
+export const handler = async (event) => {
   const client = new S3Client({ region: process.env.AWS_REGION });
 
   const bucket = event.Records[0].s3.bucket.name;
@@ -32,7 +33,7 @@ const handler = async (event) => {
         console.log('Image compressed!!');
 
         const command = new PutObjectCommand({
-          Key: key,
+          Key: 'compressed/' + path.basename(key),
           Bucket: bucket,
           Body: data,
         });
@@ -66,5 +67,3 @@ const handler = async (event) => {
     ),
   };
 };
-
-export default handler;
