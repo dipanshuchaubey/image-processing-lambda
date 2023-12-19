@@ -1,0 +1,12 @@
+service: compress-images
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+
+functions:
+  compress:
+    handler: src/compress.handler
+    package:
+      individually: true
